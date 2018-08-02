@@ -1,5 +1,5 @@
 {
-  "name": "boilermaker",
+  "name": "stackathon",
   "version": "1.0.0",
   "description": "Some boilerplate code to get you started - get shakin'!",
   "engines": {
@@ -36,6 +36,8 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^1.4.2",
+    "@material-ui/icons": "^2.0.0",
     "axios": "^0.15.3",
     "compression": "^1.7.1",
     "connect-session-sequelize": "^4.1.0",
@@ -45,6 +47,9 @@
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
+    "passport-instagram": "^1.0.0",
+    "passport-instagram-token": "^2.3.0",
+    "passport-oauth": "^1.0.0",
     "pg": "^6.1.2",
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.5.8",
@@ -85,7 +90,7 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-mock-store": "^1.2.3",
     "supertest": "^3.0.0",
-    "webpack": "^4.12.0",
+    "webpack": "^4.16.3",
     "webpack-cli": "^3.0.3"
   }
 }

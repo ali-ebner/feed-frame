@@ -1,18 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 /**
  * COMPONENT
  */
-export const UserHome = props => {
-  const {email} = props
+const UserHome = (props) => {
+    const {fullName} = props
 
-  return (
-    <div>
-      <h3>Welcome, {email}</h3>
-    </div>
-  )
+    return (
+      <div className="jumbotron">
+        <h1 className="display-4">Welcome, {fullName}</h1>
+        <hr className="my-4"/>
+        <button className="btn btn-primary btn-lg" role="button"><Link to="/colors">Get Your Feed Frame</Link></button>
+      </div>
+    )
 }
 
 /**
@@ -20,9 +23,11 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    fullName: state.user.full_name,
+    colors: state.google.colors
   }
 }
+
 
 export default connect(mapState)(UserHome)
 
@@ -30,5 +35,5 @@ export default connect(mapState)(UserHome)
  * PROP TYPES
  */
 UserHome.propTypes = {
-  email: PropTypes.string
+  fullName: PropTypes.string
 }
