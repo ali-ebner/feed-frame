@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
 const axios = require('axios')
+const { getRes, getInsta, traverse } = require('./utils')
 module.exports = router
 
 router.get('/self', async (req, res, next) => {
@@ -23,63 +24,54 @@ router.get('/self/media/recent', async (req, res, next) => {
 
 router.get('/self/colors', async (req, res, next) => {
   try {
-    const { data } = await axios.get(`https://api.instagram.com/v1/users/self/media/recent/?access_token=219263362.f575de1.d2eca60557594d16a642f18eb3e33bb5`)
-    console.log("data1", data)
-    // const request = {
-    //   "requests": data.data.map(entry => {return {
-    //     "image": {
-    //       "source": {
-    //         "imageUri": `${entry.images.standard_resolution.url}`
-    //       }
-    //     },
-    //     "features": [
-    //       {
-    //         "type": "IMAGE_PROPERTIES",
-    //         "maxResults":"1"
-    //       }
-    //     ]
-    //     }
-    //   }) 
-    // }
-    
-    const request = {
-  "requests":[
-    {
-      "image":{
-        "source":{
-          "imageUri":
-            "https://scontent.cdninstagram.com/vp/7b138887860d3cd5fc394ddca96ea19e/5C0D3740/t51.2885-15/sh0.08/e35/s640x640/37057923_183892825812369_3600906937517998080_n.jpg"
-        }
-      },
-      "features":[
-        {
-          "type":"IMAGE_PROPERTIES",
-          "maxResults":5
-        }
-      ]
-    },
-    {
-      "image":{
-        "source":{
-          "imageUri":
-            "https://scontent.cdninstagram.com/vp/569f32e2bc870f3ad3a485ab00fcdff5/5BFD0DAB/t51.2885-15/sh0.08/e35/s640x640/36760403_663686280690583_230216865610203136_n.jpg"
-        }
-      },
-      "features":[
-        {
-          "type":"IMAGE_PROPERTIES",
-          "maxResults":5
-        }
-      ]
-    }
-  ]
-}
-    console.log("request object", request)
-     const response = await axios.post(`https://vision.googleapis.com/v1/images:annotate?key=AIzaSyATsYyW-tNsA3beM3M5bM7cXm2sO69sX14`, request)
-     console.log("response in route", response.data.responses)
-    //res.json(response.data.responses[0].imagePropertiesAnnotation.dominantColors.colors)
-    res.json(response.data.responses)
+    const insta = await getInsta(req.user.accessToken)
+    const responses = await getRes(insta, "IMAGE_PROPERTIES")
+    res.json(responses)
   } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/self/labels', async (req, res, next) => {
+  try {
+    const insta = await getInsta(req.user.accessToken)
+    let responses = await getRes(insta, "LABEL_DETECTION")
+    responses = (responses.map(response => response.responses[0].labelAnnotations))
+    responses = traverse(responses)
+    res.json(responses)
+  } catch(err) {
+    next(err)
+  }
+})
+
+router.get('/self/text', async (req, res, next) => {
+  try {
+    const insta = await getInsta(req.user.accessToken)
+    const responses = await getRes(insta, "TEXT_DETECTION")
+    res.json(responses)
+  } catch(err) {
+    next(err)
+  }
+})
+
+router.get('/self/faces', async (req, res, next) => {
+  try {
+    const insta = await getInsta(req.user.accessToken)
+    const responses = await getRes(insta, "FACE_DETECTION")
+    let filtered = responses.map(response => {
+      //if(response.responses.length>0) {
+         if(response.responses[0].faceAnnotations)
+          return response.responses[0].faceAnnotations[0]
+      }
+    //}
+    )
+    filtered.forEach(response => {
+      if(response && response.landmarks) delete response.landmarks
+      if(response) delete response.boundingPoly
+      if(response) delete response.fdBoundingPoly
+    })
+    res.json(filtered)
+  } catch(err) {
     next(err)
   }
 })

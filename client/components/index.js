@@ -8,4 +8,6 @@ export { default as UserHome} from './user-home'
 export {Login} from './auth-form'
 export {default as Colors} from './colors'
 export {default as WordCloud} from './WordCloud'
-export {default as BubbleChart} from './BubbleChart'
+
+
+
