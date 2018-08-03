@@ -54,7 +54,21 @@ router.get('/self/colors', async (req, res, next) => {
       "features":[
         {
           "type":"IMAGE_PROPERTIES",
-          "maxResults":1
+          "maxResults":5
+        }
+      ]
+    },
+    {
+      "image":{
+        "source":{
+          "imageUri":
+            "https://scontent.cdninstagram.com/vp/569f32e2bc870f3ad3a485ab00fcdff5/5BFD0DAB/t51.2885-15/sh0.08/e35/s640x640/36760403_663686280690583_230216865610203136_n.jpg"
+        }
+      },
+      "features":[
+        {
+          "type":"IMAGE_PROPERTIES",
+          "maxResults":5
         }
       ]
     }
@@ -63,7 +77,8 @@ router.get('/self/colors', async (req, res, next) => {
     console.log("request object", request)
      const response = await axios.post(`https://vision.googleapis.com/v1/images:annotate?key=AIzaSyATsYyW-tNsA3beM3M5bM7cXm2sO69sX14`, request)
      console.log("response in route", response.data.responses)
-    res.json(response.data.responses[0].imagePropertiesAnnotation.dominantColors.colors)
+    //res.json(response.data.responses[0].imagePropertiesAnnotation.dominantColors.colors)
+    res.json(response.data.responses)
   } catch (err) {
     next(err)
   }

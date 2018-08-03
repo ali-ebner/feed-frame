@@ -18,7 +18,10 @@ class Colors extends Component{
     return (
       <div>
         <ul>
-          { this.props.colors.length && this.props.colors.map(color => <li key={color.score}>Red: {color.color.red} Green: {color.color.green} Blue: {color.color.blue}</li>)}
+          { this.props.colors.length && 
+            this.props.colors.map(color => <li key={color.score}>
+              Red: {color.color.red} Green: {color.color.green} Blue: {color.color.blue}
+              </li>)}
         </ul>
       </div>
     )
