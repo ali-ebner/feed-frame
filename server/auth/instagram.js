@@ -13,12 +13,7 @@ passport.use(new InstagramStrategy({
     callbackURL: "http://localhost:8080/auth/instagram/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    // User.findOrCreate({ where: { instagramId: profile.id }}, function (err, user) {
-    //   return done(err, user);
-    // });
-    console.log("ACCESS TOKEN", accessToken)
     process.env.ACCESS_TOKEN = accessToken
-    console.log("process env access", process.env.ACCESS_TOKEN)
     User.findOrCreate({
         where: {instagramId: profile.id, accessToken: accessToken}
       })
@@ -33,9 +28,7 @@ router.get('/',
 router.get('/callback', 
   passport.authenticate('instagram', { failureRedirect: '/login' }),
   function(req, res) {
-    // Successful authentication, redirect home.
-    console.log(req.user)
-    res.redirect('/home');
+    res.redirect('/home')
   });
   
 

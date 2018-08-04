@@ -24,6 +24,15 @@ async function getRes(data, featureType) {
     return responses
   }
 
+  async function getComments( data, accessToken) {
+  	let responses = await Promise.all(data.map(async entry => {
+  		let response = await axios.get(`https://api.instagram.com/v1/media/${entry.id}/comments?access_token=${accessToken}`)
+  		console.log("response data", response.data.data)
+  		return response.data.data.map( el => el.text)
+  	}))
+  	return responses
+  }
+
   async function getInsta(accessToken) {
   	const { data } = await axios.get(`https://api.instagram.com/v1/users/self/media/recent?access_token=${accessToken}`)
   	return data
@@ -32,7 +41,6 @@ async function getRes(data, featureType) {
   const traverse = (nestedArr) => {
   	let labels = []
   	nestedArr.forEach(innerArr => {
-  		console.log("innerArr", innerArr)
   		innerArr = innerArr && innerArr.map(obj => {
   			if(obj.description!==null) return obj.description 
   		})
@@ -41,8 +49,91 @@ async function getRes(data, featureType) {
   	return labels
   }
 
+  const filterFaces = responses => {
+  	let filtered = responses.map(response => {
+         if(response.responses[0].faceAnnotations)
+          return response.responses[0].faceAnnotations[0]
+      }
+    )
+    filtered.forEach(response => {
+      if(response) {
+        delete response.landmarks
+        delete response.boundingPoly
+        delete response.fdBoundingPoly
+        delete response.rollAngle
+        delete response.panAngle
+        delete response.detectionConfidence
+        delete response.landmarkingConfidence
+        delete response.tiltAngle
+      }
+  })
+    return filtered
+}
+
+const mostLikely = faces => {
+	let obj = {
+		joyLikelihood: 0,
+		sorrowLikelihood: 0,
+		angerLikelihood: 0,
+		surpriseLikelihood: 0
+	}
+	let keys = Object.keys(obj)
+	for (var i = 0; i < faces.length; i++) {
+		let currentObj = faces[i]
+		console.log(currentObj)
+		for (var j = 0; j < keys.length; j++) {
+			if (currentObj!==undefined && ( currentObj[keys[j]] === "VERY_LIKELY" || currentObj[keys[j]] === "LIKELY" || currentObj[keys[j]] === "POSSIBLE")) {
+				obj[keys[j]]++
+			}
+		}
+	}
+	for(let key in obj){
+		if(obj.hasOwnProperty(key))
+			console.log("key", key)
+		obj[key[0].toUpperCase()+key.slice(1, key.indexOf("L"))] = obj[key]
+		delete obj[key]
+	}
+	return obj
+}
+
+const leastLikely = faces => {
+	let obj = {
+		joyLikelihood: 0,
+		sorrowLikelihood: 0,
+		angerLikelihood: 0,
+		surpriseLikelihood: 0
+	}
+	let keys = Object.keys(obj)
+	for (var i = 0; i < faces.length; i++) {
+		let currentObj = faces[i]
+		console.log(currentObj)
+		for (var j = 0; j < keys.length; j++) {
+			if (currentObj!==undefined && ( currentObj[keys[j]] === "VERY_UNLIKELY" || currentObj[keys[j]] === "UNLIKELY")) {
+				obj[keys[j]]++
+			}
+		}
+	}
+	for(let key in obj){
+		if(obj.hasOwnProperty(key))
+			console.log("key", key)
+		obj[key[0].toUpperCase()+key.slice(1, key.indexOf("L"))] = obj[key]
+		delete obj[key]
+	}
+	return obj
+}
+
+const toHex = rgb => `#`+(rgb.red.toString(16))+((rgb.green).toString(16))+((rgb.blue).toString(16))
+
+const colorsToHex = colors => colors.map(colorObj => toHex(colorObj))
+
+
   module.exports = {
   	getRes,
   	getInsta,
-  	traverse
+  	traverse,
+  	filterFaces,
+  	mostLikely,
+  	leastLikely,
+  	colorsToHex,
+  	getComments
   }

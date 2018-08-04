@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, UserHome, Colors, WordCloud} from './components'
+import {Login, UserHome, Colors, WordCloud, PieChart, BarChart} from './components'
 import {me} from './store'
 
 /**
@@ -20,7 +20,8 @@ class Routes extends Component {
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/home" component={WordCloud} />
-        <Route exact path="/colors"  />
+        <Route exact path="/colors" component={PieChart} />
+        <Route exact path="/faces" component={BarChart} />
         <Route component={Login} />
       </Switch>
     )
