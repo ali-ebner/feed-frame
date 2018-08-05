@@ -4,6 +4,7 @@ import history from '../history'
 const GET_COLORS = 'GET_COLORS'
 const GET_LABELS = 'GET_LABELS'
 const GET_FACES = 'GET_FACES'
+const GOT_USER = 'GOT_USER'
 
 
 const colorData = (colors) => ({type: GET_COLORS, colors})
@@ -12,11 +13,14 @@ const labelData = (labels) => ({type: GET_LABELS, labels})
 
 const faceData = (likely, unlikely) => ({type: GET_FACES, likely, unlikely})
 
+const gotUser = (user) => ({type: GOT_USER, user})
+
 const initialState = {
 	colors: [],
   labels: [],
   likelyFaces: {},
-  unlikelyFaces: {}
+  unlikelyFaces: {},
+  user: {}
 }
 
 
@@ -51,6 +55,17 @@ export const getFaces = () => async dispatch => {
   }
 }
 
+export const getUser = () => async dispatch => {
+  try {
+    console.log("here in getUser")
+    const { data } = await axios.get('/api/users/self')
+    console.log("data in thunk", data)
+    dispatch(gotUser(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_COLORS:
@@ -59,6 +74,8 @@ export default function(state = initialState, action) {
       return {...state, labels: action.labels}
     case GET_FACES:
       return {...state, likelyFaces: action.likely, unlikelyFaces: action.unlikely}
+    case GOT_USER:
+      return {...state, user: action.user}
     default:
       return state
   }

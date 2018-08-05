@@ -60,6 +60,7 @@
     "react-bubble-chart": "^0.4.0",
     "react-d3-cloud": "^0.6.0",
     "react-dom": "^16.4.2",
+    "react-instafeed": "^0.4.0",
     "react-redux": "^5.0.2",
     "react-router-dom": "^4.1.1",
     "recharts": "^1.1.0",

@@ -4,10 +4,17 @@ const axios = require('axios')
 const { getRes, getInsta, traverse, filterFaces, mostLikely, leastLikely, colorsToHex, getComments } = require('./utils')
 module.exports = router
 
+
 router.get('/self', async (req, res, next) => {
   try {
-    const data = await axios.get(`https://api.instagram.com/v1/users/self/?access_token=${req.user.accessToken}`)
-    res.json(data.data)
+    const { data } = await axios.get(`https://api.instagram.com/v1/users/self/?access_token=${req.user.accessToken}`)
+    const user = {
+      userId: data.data.id,
+      accessToken: req.user.accessToken,
+      clientId: process.env.INSTAGRAM_CLIENT_ID,
+      fullName: data.data.full_name
+    }
+    res.json(user)
   } catch (err) {
     next(err)
   }

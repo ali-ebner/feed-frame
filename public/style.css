@@ -1,9 +1,11 @@
 body {
   font-family: sans-serif;
+  background-color: white !important;
 }
 
 a {
   text-decoration: none;
+  color: white;
 }
 
 label {
@@ -13,6 +15,7 @@ label {
 nav a {
   display: inline-block;
   margin: 1em;
+  color: white;
 }
 
 form div {
@@ -29,3 +32,33 @@ form div {
   justify-content: center;
   width: 60em;
 }
+
+.button {
+	color: white;
+}
+
+.jumbotron {
+    text-align:  center;
+    background-color: white !important;
+}
+
+.card-columns {
+    -webkit-column-count: 4 !important;
+    -moz-column-count: 4 !important;
+    column-count: 4 !important;
+    -webkit-column-gap: 1.25rem;
+    -moz-column-gap: 1.25rem;
+    column-gap: 1.25rem;
+    orphans: 1;
+    widows: 1;
+    padding-top: 30px;
+}
+
+nav {
+	background-color: #5B5EC8;
+}
+
+#main {
+	background-color: white;
+}
+

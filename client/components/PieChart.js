@@ -2,6 +2,7 @@ import { PieChart, Pie, Sector, Cell } from 'Recharts'
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { getColors } from '../store/google'
+import { WordCloud, BarChart } from '../components'
 
 const data = [{name: 'Group A', value: 20}, {name: 'Group B', value: 20},
                   {name: 'Group C', value: 20}, {name: 'Group D', value: 20}, {name: 'Group E', value: 20},
@@ -15,29 +16,9 @@ const data = [{name: 'Group A', value: 20}, {name: 'Group B', value: 20},
                   {name: 'Group T', value: 20}]
 
 const toHex = rgb => `#`+(rgb.red.toString(16))+((rgb.green).toString(16))+((rgb.blue).toString(16))
-const colorObj = {
-  red: 65,
-  green: 50,
-  blue: 34
-}
-console.log(colorObj)
-const color1 = toHex(colorObj)
-const COLORS = [color1, '#00C49F', '#FFBB28', '#FF8042']
-
-const RADIAN = Math.PI / 180;
 
 
-// const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-//  	const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-//   const x  = cx + radius * Math.cos(-midAngle * RADIAN);
-//   const y = cy  + radius * Math.sin(-midAngle * RADIAN);
- 
-//   return (
-//     <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} 	dominantBaseline="central">
-//     	{`${(percent * 100).toFixed(0)}%`}
-//     </text>
-//   );
-// };
+const COLORS = ['#FFFFFF', '#00C49F', '#FFBB28', '#FF8042']
 
 class SimplePieChart extends Component{
   componentDidMount(){
@@ -47,6 +28,7 @@ class SimplePieChart extends Component{
 	render () {
     const colors = this.props.colors || COLORS
   	return (
+      <div>
       <div id="pie">
     	<PieChart width={800} height={400} onMouseEnter={this.onPieEnter}>
         <Pie
@@ -63,6 +45,13 @@ class SimplePieChart extends Component{
           }
         </Pie>
       </PieChart>
+      </div>
+      <div id="barchart">
+      <BarChart />
+      </div>
+      <div id="wordcloud">
+      <WordCloud />
+      </div>
       </div>
     )
   }

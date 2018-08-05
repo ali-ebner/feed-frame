@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 
 const App = () => {
   return (
-    <div>
+    <div id="main">
       <CssBaseline />
       <Navbar />
       <Routes />
