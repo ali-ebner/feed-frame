@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import WordCloud from 'react-d3-cloud';
 import { connect } from 'react-redux'
 import { getLabels } from '../store/google'
+import Button from '@material-ui/core/Button'
+import { Link } from 'react-router-dom'
 
  
 // const data = [
@@ -27,11 +29,26 @@ class myWordCloud extends Component {
     }))
     console.log("DATA", data)
   return (
+      <div id="graphs" >
+      <div id="word" className="my-card"  >
+      <div id="wordcloud">
        <WordCloud
         data={data}
         fontSizeMapper={fontSizeMapper}
         rotate={rotate}
         />
+      </div>
+      <div className="jumbotron jumbotron-fluid" id="word-jumbo">
+      <div className="container">
+      <h4 className="display-4" id="word-caption">Your Label Detections</h4>
+      <p className="lead">Labels for entities detected in your recent photos.</p>
+      </div>
+      </div>
+      <div className="next-btn" id="word-btn">
+      <Button type="button" variant="contained" color="primary"><Link to='/home' className="button">Back Home</Link></Button>
+      </div>
+      </div>
+      </div>
     )
   }
 }

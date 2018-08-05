@@ -27,10 +27,7 @@ form div {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  width: 60em;
+  padding-left: 100px
 }
 
 .button {
@@ -62,3 +59,68 @@ nav {
 	background-color: white;
 }
 
+.next-btn {
+    padding-left:  175px;
+    padding-bottom: 20px;
+    border-top: 1.25px solid lightgray;
+    padding-top: 20px;
+    padding-right: 75px;
+    margin-right: 100px;
+}
+
+.my-card {
+  display:  inline-block;
+  width: 800px !important;
+  padding-left: 1px;
+  /*border: 1.25px solid lightgray;*/
+  margin-left: 300px;
+  border-radius: 5px;
+  box-shadow: 0px 1px 1px 1px slategray;
+  margin-bottom: 50px;
+}
+
+.jumbotron-fluid {
+    padding-right: 0;
+    padding-left: 0px !important;
+    border-radius: 0;
+    padding-bottom: 5px !important;
+    padding-top: 5px !important;
+    padding-right: 85px !important;
+
+}
+
+#bar {
+    padding-left: 100px;
+    margin-left: 250px;
+}
+
+#bar-jumbo {
+    padding-top: 60px !important;
+}
+
+#bar-btn {
+    padding-left: 200px;
+}
+
+#barchart {
+    padding-top:  25px;
+    margin-right: 50px;
+}
+
+div#wordcloud {
+    padding-left: 50px;
+    padding-top: 20px;
+}
+
+#word-jumbo {
+    /* padding-left: 100px; */
+    margin-left: 100px;
+}
+
+#word-btn {
+    margin-left: 175px;
+}
+
+#word {
+	margin-left: 200px;
+}

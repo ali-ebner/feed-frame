@@ -1,8 +1,10 @@
-import { PieChart, Pie, Sector, Cell } from 'Recharts'
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'Recharts'
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { getColors } from '../store/google'
 import { WordCloud, BarChart } from '../components'
+import { Link } from 'react-router-dom'
+import Button from '@material-ui/core/Button'
 
 const data = [{name: 'Group A', value: 20}, {name: 'Group B', value: 20},
                   {name: 'Group C', value: 20}, {name: 'Group D', value: 20}, {name: 'Group E', value: 20},
@@ -28,9 +30,9 @@ class SimplePieChart extends Component{
 	render () {
     const colors = this.props.colors || COLORS
   	return (
-      <div>
-      <div id="pie">
-    	<PieChart width={800} height={400} onMouseEnter={this.onPieEnter}>
+      <div id="graphs" >
+      <div id="pie" className="my-card"  >
+    	<PieChart width={800} height={400} onMouseEnter={this.onPieEnter} className="card-img-top">
         <Pie
           data={data} 
           cx={300} 
@@ -45,14 +47,18 @@ class SimplePieChart extends Component{
           }
         </Pie>
       </PieChart>
-      </div>
-      <div id="barchart">
-      <BarChart />
-      </div>
-      <div id="wordcloud">
-      <WordCloud />
+      <div className="jumbotron jumbotron-fluid">
+      <div className="container">
+      <h4 className="display-4">Your Color Palette</h4>
+      <p className="lead">The most prominent colors from every photo in your recent feed.</p>
       </div>
       </div>
+      <div className="next-btn">
+      <Button type="button" variant="contained" color="primary"><Link to='/faces' className="button">Next: Photo Sentiment Analysis</Link></Button>
+      </div>
+      </div>
+      </div>
+     
     )
   }
 }

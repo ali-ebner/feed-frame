@@ -2,6 +2,8 @@ import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'Recha
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { getFaces } from '../store/google'
+import Button from '@material-ui/core/Button'
+import { Link } from 'react-router-dom'
 
 class StackedBarChart extends Component{
   componentDidMount(){
@@ -19,6 +21,9 @@ class StackedBarChart extends Component{
     ]
 
   	return (
+      <div id="graphs" >
+      <div id="bar" className="my-card"  >
+      <div id="barchart">
     	<BarChart width={600} height={300} data={data}
             margin={{top: 20, right: 30, left: 20, bottom: 5}}>
        <CartesianGrid strokeDasharray="3 3"/>
@@ -29,6 +34,18 @@ class StackedBarChart extends Component{
        <Bar dataKey="likely" stackId="a" fill="#8884d8" />
        <Bar dataKey="unlikely" stackId="a" fill="#82ca9d" />
       </BarChart>
+      </div>
+      <div className="jumbotron jumbotron-fluid" id="bar-jumbo">
+      <div className="container">
+      <h4 className="display-4" id="bar-caption">Your Sentiment Analysis</h4>
+      <p className="lead">The most likely emotions in your recent photos.</p>
+      </div>
+      </div>
+      <div className="next-btn" id="bar-btn">
+      <Button type="button" variant="contained" color="primary"><Link to='/labels' className="button">Next: Label Detection</Link></Button>
+      </div>
+      </div>
+      </div>
     )
   }
 }
