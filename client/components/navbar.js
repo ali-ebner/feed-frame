@@ -15,7 +15,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
               <Link to="/colors" className="nav-link active">Color Palette</Link>
               <Link to="/faces" className="nav-link active">Image Sentiments</Link>
               <Link to="/labels" className="nav-link active">Image Labels</Link>
-              <Link to="/labels" className="nav-link active">Comment Sentiments</Link>
+              <Link to="/comments" className="nav-link active">Comment Sentiments</Link>
             </li>
           </ul>
       }

@@ -10,7 +10,8 @@ module.exports = router
 passport.use(new InstagramStrategy({
     clientID: process.env.INSTAGRAM_CLIENT_ID,
     clientSecret: process.env.INSTAGRAM_CLIENT_SECRET,
-    callbackURL: "http://localhost:8080/auth/instagram/callback"
+    //callbackURL: "http://localhost:8080/auth/instagram/callback"
+    callbackURL: "http://feedframe.herokuapp.com/auth/instagram/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     process.env.ACCESS_TOKEN = accessToken
