@@ -11,6 +11,6 @@ export {default as WordCloud} from './WordCloud'
 export {default as PieChart} from './PieChart'
 export {default as BarChart} from './BarChart'
 export {default as Home} from './Home'
-
+export {default as Comments} from './Comments'
 
 

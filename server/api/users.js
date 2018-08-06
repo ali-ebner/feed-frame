@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
 const axios = require('axios')
-const { getRes, getInsta, traverse, filterFaces, mostLikely, leastLikely, colorsToHex, getComments } = require('./utils')
+const { getRes, getInsta, traverse, filterFaces, mostLikely, leastLikely, colorsToHex, getComments, filterEmpty, getSentiment } = require('./utils')
 module.exports = router
 
 
@@ -112,6 +112,18 @@ router.get('/self/comments', async (req, res, next) => {
   try {
     const insta = await getInsta(req.user.accessToken)
     let comments = await getComments(insta.data, req.user.accessToken)
+    comments = filterEmpty(comments)
+    comments = {
+    "document":{
+      "type":"PLAIN_TEXT",
+      "language": "EN",
+      "content":comments
+    },
+    "encodingType":"UTF8"
+   }
+    const { data } = await axios.post(`https://language.googleapis.com/v1/documents:analyzeSentiment?key=AIzaSyATsYyW-tNsA3beM3M5bM7cXm2sO69sX14`, comments)
+    const sentiment = getSentiment(data)
+    comments = { Score: data.documentSentiment.score, Sentiment: sentiment }
     res.json(comments)
   } catch(err) {
     next(err)

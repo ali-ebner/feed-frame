@@ -37,7 +37,7 @@ class StackedBarChart extends Component{
       </div>
       <div className="jumbotron jumbotron-fluid" id="bar-jumbo">
       <div className="container">
-      <h4 className="display-4" id="bar-caption">Your Sentiment Analysis</h4>
+      <h4 className="display-4" id="bar-caption">Your Image Sentiment Analysis</h4>
       <p className="lead">The most likely emotions in your recent photos.</p>
       </div>
       </div>

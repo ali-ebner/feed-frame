@@ -9,12 +9,10 @@ class Colors extends Component{
   }
 
   componentDidMount(){
-    console.log("HERE")
     this.props.getColors()
   }
 
   render() {
-    console.log(this.props)
     return (
       <div>
         <ul>

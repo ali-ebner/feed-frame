@@ -45,7 +45,7 @@ class myWordCloud extends Component {
       </div>
       </div>
       <div className="next-btn" id="word-btn">
-      <Button type="button" variant="contained" color="primary"><Link to='/home' className="button">Back Home</Link></Button>
+      <Button type="button" variant="contained" color="primary"><Link to='/comments' className="button">Next:Comment Sentiment Analysis</Link></Button>
       </div>
       </div>
       </div>

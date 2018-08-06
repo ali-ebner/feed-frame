@@ -5,6 +5,7 @@ const GET_COLORS = 'GET_COLORS'
 const GET_LABELS = 'GET_LABELS'
 const GET_FACES = 'GET_FACES'
 const GOT_USER = 'GOT_USER'
+const GOT_COMMENTS = 'GOT_COMMENTS'
 
 
 const colorData = (colors) => ({type: GET_COLORS, colors})
@@ -15,19 +16,21 @@ const faceData = (likely, unlikely) => ({type: GET_FACES, likely, unlikely})
 
 const gotUser = (user) => ({type: GOT_USER, user})
 
+const gotComments = (comments) => ({type:GOT_COMMENTS, comments})
+
 const initialState = {
 	colors: [],
   labels: [],
   likelyFaces: {},
   unlikelyFaces: {},
-  user: {}
+  user: {},
+  comments: {}
 }
 
 
 export const getColors = () => async dispatch => {
   try {
     const { data } = await axios.get('/api/users/self/colors')
-    console.log("data in thunk", data)
     dispatch(colorData(data))
   } catch (err) {
     console.error(err)
@@ -57,10 +60,17 @@ export const getFaces = () => async dispatch => {
 
 export const getUser = () => async dispatch => {
   try {
-    console.log("here in getUser")
     const { data } = await axios.get('/api/users/self')
-    console.log("data in thunk", data)
     dispatch(gotUser(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const getComments = () => async dispatch => {
+  try {
+    const { data } = await axios.get('/api/users/self/comments')
+    dispatch(gotComments(data))
   } catch (err) {
     console.error(err)
   }
@@ -76,6 +86,8 @@ export default function(state = initialState, action) {
       return {...state, likelyFaces: action.likely, unlikelyFaces: action.unlikely}
     case GOT_USER:
       return {...state, user: action.user}
+    case GOT_COMMENTS:
+      return {...state, comments: action.comments}
     default:
       return state
   }

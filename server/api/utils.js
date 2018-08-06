@@ -27,7 +27,6 @@ async function getRes(data, featureType) {
   async function getComments( data, accessToken) {
   	let responses = await Promise.all(data.map(async entry => {
   		let response = await axios.get(`https://api.instagram.com/v1/media/${entry.id}/comments?access_token=${accessToken}`)
-  		console.log("response data", response.data.data)
   		return response.data.data.map( el => el.text)
   	}))
   	return responses
@@ -80,7 +79,6 @@ const mostLikely = faces => {
 	let keys = Object.keys(obj)
 	for (var i = 0; i < faces.length; i++) {
 		let currentObj = faces[i]
-		console.log(currentObj)
 		for (var j = 0; j < keys.length; j++) {
 			if (currentObj!==undefined && ( currentObj[keys[j]] === "VERY_LIKELY" || currentObj[keys[j]] === "LIKELY" || currentObj[keys[j]] === "POSSIBLE")) {
 				obj[keys[j]]++
@@ -89,7 +87,6 @@ const mostLikely = faces => {
 	}
 	for(let key in obj){
 		if(obj.hasOwnProperty(key))
-			console.log("key", key)
 		obj[key[0].toUpperCase()+key.slice(1, key.indexOf("L"))] = obj[key]
 		delete obj[key]
 	}
@@ -126,6 +123,28 @@ const toHex = rgb => `#`+(rgb.red.toString(16))+((rgb.green).toString(16))+((rgb
 
 const colorsToHex = colors => colors.map(colorObj => toHex(colorObj))
 
+const filterEmpty = data => {
+	let filtered = data.filter(entry => entry.length > 0)
+	return filtered.reduce( (acc, curr) => acc.concat(curr), []).reduce((acc, curr) => acc + curr, '')
+}
+
+const getSentiment = data => {
+	const score = data.documentSentiment.score
+	if ( score > 0.1 && score <= 0.5 ) {
+		return "Slightly Positive"
+	}
+	else if (score > 0.5 ) {
+		return "Strongly Positive"
+	}
+	else if (score >= -0.5 && score < 0 ) {
+		return "Slightly Negative"
+	}
+	else if (score < -0.5 ) {
+		return "Strongly Negative"
+	}
+	else return "Neutral"
+}
+
 
   module.exports = {
   	getRes,
@@ -135,5 +154,7 @@ const colorsToHex = colors => colors.map(colorObj => toHex(colorObj))
   	mostLikely,
   	leastLikely,
   	colorsToHex,
-  	getComments
+  	getComments,
+  	filterEmpty,
+  	getSentiment
   }

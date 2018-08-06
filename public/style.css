@@ -91,7 +91,7 @@ nav {
 
 #bar {
     padding-left: 100px;
-    margin-left: 250px;
+    margin-left: 300px;
 }
 
 #bar-jumbo {
@@ -118,9 +118,31 @@ div#wordcloud {
 }
 
 #word-btn {
-    margin-left: 175px;
+    margin-left: 90px;
 }
 
 #word {
-	margin-left: 200px;
+	margin-left: 300px;
+}
+
+.nav-item {
+    display:  flex;
+}
+
+.alert-info {
+    height: 200px !important;
+    text-align: center;
+    padding-top: 50px !important;
+}
+
+#com {
+    margin-left:  300px;
+}
+
+#com-jumbo {
+    margin-left: 75px;
+}
+
+#com-btn {
+    margin-left: 175px;
 }

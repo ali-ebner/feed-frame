@@ -11,6 +11,11 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <ul className="nav">
             <li className="nav-item">
               <a className="nav-link active" href="#" onClick={handleClick} disabled={!isLoggedIn}>Logout</a>
+              <Link to="/home" className="nav-link active">Home</Link>
+              <Link to="/colors" className="nav-link active">Color Palette</Link>
+              <Link to="/faces" className="nav-link active">Image Sentiments</Link>
+              <Link to="/labels" className="nav-link active">Image Labels</Link>
+              <Link to="/labels" className="nav-link active">Comment Sentiments</Link>
             </li>
           </ul>
       }
